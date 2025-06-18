@@ -60,22 +60,35 @@ goto :eof
 :check_update
 set "REPO_BASE=https://raw.githubusercontent.com/sane4ekgs/clenup_sanchez/main"
 set "TMPV=%TEMP%\remote_version.txt"
-set "TMPB=%TEMP%\latest_cleanup.bat"
+set "TMPB=%TEMP%\latest_clenup.bat"
 
+echo ==================================================
+echo (ℹ️) Получаю версию с:
+echo      !REPO_BASE!/.version.txt
+echo --------------------------------------------------
 curl -s -L -o "!TMPV!" "!REPO_BASE!/.version.txt" >nul 2>&1
 if exist "!TMPV!" (
     set /p REMOTE_VER=<"!TMPV!"
     del "!TMPV!"
 )
 
-if not defined REMOTE_VER goto :eof
-if /I "!REMOTE_VER!"=="!VERSION!" goto :eof
+if not defined REMOTE_VER (
+    echo ⚠️ Не удалось получить версию. Проверку пропущено.
+    goto :eof
+)
 
-echo 🆕 Новая версия: !REMOTE_VER! (текущая: !VERSION!)
-echo Обновляю скрипт...
+if /I "!REMOTE_VER!"=="!VERSION!" (
+    echo ✅ Скрипт актуален (v!VERSION!)
+    goto :eof
+)
 
+echo 🆕 Доступна новая версия: !REMOTE_VER! (у тебя: !VERSION!)
+echo      Загружаю:
+echo      !REPO_BASE!/clenup.bat
+echo --------------------------------------------------
 curl -s -L -o "!TMPB!" "!REPO_BASE!/clenup.bat" >nul 2>&1
 if exist "!TMPB!" (
+    echo 🔁 Заменяю текущий скрипт...
     copy /Y "!TMPB!" "%~f0" >nul
     del "!TMPB!"
     echo ✅ Обновление завершено! Перезапуск...
@@ -83,7 +96,7 @@ if exist "!TMPB!" (
     start "" "%~f0"
     exit
 ) else (
-    echo ❌ Не удалось загрузить обновление!
+    echo ❌ Ошибка при загрузке с !REPO_BASE!/clenup.bat
 )
 goto :eof
 
