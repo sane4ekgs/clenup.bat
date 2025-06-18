@@ -48,7 +48,7 @@ echo 4. Відновити з резервної копії
 echo 5. Очистити історію провідника та Quick Access
 echo 6. Видалити журнал дій Windows
 echo 7. Видалити тимчасові файли
-echo 8. Перевірка шкідливих процесів
+echo 8. 
 echo 9. Режим холодного видалення 💣
 echo 0. Вихід
 echo.
@@ -68,7 +68,7 @@ echo ==================================================
 echo (ℹ️) Получаю версию с:
 echo      !REPO_BASE!/.version.txt
 echo --------------------------------------------------
-curl -s -L -o "!TMPV!" "!REPO_BASE!/.version.txt" >nul 2>&1
+curl -s -L -o "!TMPV!" "https://github.com/sane4ekgs/clenup_sanchez/raw/refs/heads/main/.version.txt" >nul 2>&1
 if exist "!TMPV!" (
     set /p REMOTE_VER=<"!TMPV!"
     del "!TMPV!"
@@ -88,7 +88,7 @@ echo 🆕 Доступна новая версія: !REMOTE_VER! (у тебя: !
 echo      Загружаю:
 echo      !REPO_BASE!/clenup.bat
 echo --------------------------------------------------
-curl -s -L -o "!TMPB!" "!REPO_BASE!/clenup.bat" >nul 2>&1
+curl -s -L -o "!TMPB!" "https://github.com/sane4ekgs/clenup_sanchez/raw/refs/heads/main/clenup.bat" >nul 2>&1
 if exist "!TMPB!" (
     echo 🔁 Заменяю текущий скрипт...
     copy /Y "!TMPB!" "%~f0" >nul
