@@ -1,4 +1,6 @@
 @echo off
+call :set_version
+call :check_update
 chcp 65001 >nul
 color 0A
 title Універсальне очищення ПК
@@ -61,6 +63,41 @@ if "!choice!"=="0" exit
 
 echo ❌ Невірний вибір.
 pause
+
+:set_version
+:: поточна версія скрипта — змінюй при кожному релізі:
+set "VERSION=2.0"
+goto :eof
+:check_update
+set "REPO_BASE=https://raw.githubusercontent.com/sane4ekgs/clenup_sanchez_v2/main"
+set "TMPV=%TEMP%\remote_version.txt"
+set "TMPB=%TEMP%\latest_cleanup.bat"
+
+:: Получаем .version.txt
+curl -s -L -o "!TMPV!" "!REPO_BASE!/.version.txt" >nul 2>&1
+if exist "!TMPV!" (
+    set /p REMOTE_VER=<"!TMPV!"
+    del "!TMPV!"
+)
+
+if not defined REMOTE_VER goto :eof
+if /I "!REMOTE_VER!"=="!VERSION!" goto :eof
+
+echo 🆕 Новая версия: !REMOTE_VER! (текущая: !VERSION!)
+echo Обновляю cleanup.bat...
+
+curl -s -L -o "!TMPB!" "!REPO_BASE!/cleanup.bat" >nul 2>&1
+if exist "!TMPB!" (
+    copy /Y "!TMPB!" "%~f0" >nul
+    del "!TMPB!"
+    echo ✅ Обновление завершено! Перезапуск...
+    timeout /t 2 >nul
+    start "" "%~f0"
+    exit
+) else (
+    echo ❌ Не удалось загрузить обновление!
+)
+goto :eof
 
 :clear_quick_access
 cls
