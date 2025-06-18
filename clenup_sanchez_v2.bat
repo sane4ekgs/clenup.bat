@@ -25,7 +25,7 @@ setlocal enabledelayedexpansion
 set "VERSION=2.0"
 goto :eof
 :check_update
-set "REPO_BASE=https://raw.githubusercontent.com/sane4ekgs/clenup_sanchez_v2/main"
+set "REPO_BASE=https://github.com/sane4ekgs/clenup_sanchez_v2.0.git"
 set "TMPV=%TEMP%\remote_version.txt"
 set "TMPB=%TEMP%\latest_cleanup.bat"
 
