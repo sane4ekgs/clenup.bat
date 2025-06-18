@@ -54,7 +54,7 @@ set /p msel=Ваш вибір:
 exit /b
 
 :set_version
-set "VERSION=2.1"
+set "VERSION=2.2"
 goto :eof
 
 :check_update
