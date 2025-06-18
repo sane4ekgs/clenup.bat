@@ -31,7 +31,7 @@ set "VERSION=2.0"
 goto :eof
 
 :check_update
-set "REPO_BASE=https://raw.githubusercontent.com/sane4ekgs/clenup.bat/refs/heads/main/clenup.bat"
+set "REPO_BASE=https://raw.githubusercontent.com/sane4ekgs/clenup_sanchez/main"
 set "TMPV=%TEMP%\remote_version.txt"
 set "TMPB=%TEMP%\latest_cleanup.bat"
 
