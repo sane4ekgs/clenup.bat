@@ -2,8 +2,12 @@
 chcp 65001 >nul
 color 0A
 
+:: Включаем расширение переменных
+setlocal enabledelayedexpansion
+
 :: Версия скрипта
 call :set_version
+
 :: Проверка обновлений
 call :check_update
 
@@ -21,8 +25,6 @@ if %errorlevel% neq 0 (
     pause
     exit
 )
-
-setlocal enabledelayedexpansion
 
 :: Создание резервной папки
 set "STAMP=%COMPUTERNAME%_%DATE:~6,4%-%DATE:~3,2%-%DATE:~0,2%_%TIME:~0,2%-%TIME:~6,2%"
@@ -56,7 +58,6 @@ exit /b
 :set_version
 set "VERSION=2.2"
 goto :eof
-:: ВАЖЛИВО: GitHub RAW для ветки main — використовуй "refs/heads/main"
 
 :check_update
 set "REPO_BASE=https://github.com/sane4ekgs/clenup_sanchez/raw/refs/heads/main"
@@ -83,23 +84,24 @@ if /I "!REMOTE_VER!"=="!VERSION!" (
     goto :eof
 )
 
-echo 🆕 Доступна новая версія: !REMOTE_VER! (у тебе: !VERSION!)
-echo      Завантажую:
+echo 🆕 Доступна новая версія: !REMOTE_VER! (у тебя: !VERSION!)
+echo      Загружаю:
 echo      !REPO_BASE!/clenup.bat
 echo --------------------------------------------------
 curl -s -L -o "!TMPB!" "!REPO_BASE!/clenup.bat" >nul 2>&1
 if exist "!TMPB!" (
-    echo 🔁 Заміню поточний скрипт...
+    echo 🔁 Заменяю текущий скрипт...
     copy /Y "!TMPB!" "%~f0" >nul
     del "!TMPB!"
-    echo ✅ Оновлення завершено! Перезапуск...
+    echo ✅ Обновление завершено! Перезапуск...
     timeout /t 2 >nul
     start "" "%~f0"
     exit
 ) else (
-    echo ❌ Помилка під час завантаження з !REPO_BASE!/clenup.bat
+    echo ❌ Ошибка при загрузке с !REPO_BASE!/clenup.bat
 )
 goto :eof
+
 
 
 if "!choice!"=="1" goto browser_select
