@@ -1,10 +1,11 @@
 @echo off
 
+chcp 65001 >nul
+color 0A
+
 call :set_version
 call :check_update
 
-chcp 65001 >nul
-color 0A
 title Універсальне очищення ПК
 
 echo ==================================================
