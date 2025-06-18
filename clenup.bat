@@ -27,7 +27,7 @@ goto :main_menu
 
 :set_version
 :: Локальна версія
-set "VERSION=2.0"
+set "VERSION=2.1"
 goto :eof
 
 :check_update
