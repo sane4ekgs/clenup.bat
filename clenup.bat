@@ -54,11 +54,12 @@ set /p msel=Ваш вибір:
 exit /b
 
 :set_version
-set "VERSION=2.2"
+set "VERSION=2.1"
 goto :eof
+:: ВАЖЛИВО: GitHub RAW для ветки main — використовуй "refs/heads/main"
 
 :check_update
-set "REPO_BASE=https://raw.githubusercontent.com/sane4ekgs/clenup_sanchez/main"
+set "REPO_BASE=https://github.com/sane4ekgs/clenup_sanchez/raw/refs/heads/main"
 set "TMPV=%TEMP%\remote_version.txt"
 set "TMPB=%TEMP%\latest_clenup.bat"
 
@@ -82,23 +83,24 @@ if /I "!REMOTE_VER!"=="!VERSION!" (
     goto :eof
 )
 
-echo 🆕 Доступна новая версия: !REMOTE_VER! (у тебя: !VERSION!)
-echo      Загружаю:
+echo 🆕 Доступна новая версія: !REMOTE_VER! (у тебе: !VERSION!)
+echo      Завантажую:
 echo      !REPO_BASE!/clenup.bat
 echo --------------------------------------------------
 curl -s -L -o "!TMPB!" "!REPO_BASE!/clenup.bat" >nul 2>&1
 if exist "!TMPB!" (
-    echo 🔁 Заменяю текущий скрипт...
+    echo 🔁 Заміню поточний скрипт...
     copy /Y "!TMPB!" "%~f0" >nul
     del "!TMPB!"
-    echo ✅ Обновление завершено! Перезапуск...
+    echo ✅ Оновлення завершено! Перезапуск...
     timeout /t 2 >nul
     start "" "%~f0"
     exit
 ) else (
-    echo ❌ Ошибка при загрузке с !REPO_BASE!/clenup.bat
+    echo ❌ Помилка під час завантаження з !REPO_BASE!/clenup.bat
 )
 goto :eof
+
 
 if "!choice!"=="1" goto browser_select
 if "!choice!"=="2" goto messenger_select
