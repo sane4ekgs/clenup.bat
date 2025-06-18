@@ -1,6 +1,8 @@
 @echo off
+
 call :set_version
 call :check_update
+
 chcp 65001 >nul
 color 0A
 title Універсальне очищення ПК
@@ -20,12 +22,15 @@ if %errorlevel% neq 0 (
 
 setlocal enabledelayedexpansion
 
+goto :main_menu
+
 :set_version
-:: поточна версія скрипта — змінюй при кожному релізі:
+:: Локальна версія
 set "VERSION=2.0"
 goto :eof
+
 :check_update
-set "REPO_BASE=https://github.com/sane4ekgs/clenup_sanchez_v2.0.git"
+set "REPO_BASE=https://raw.githubusercontent.com/sane4ekgs/clenup_sanchez_v2.0/main"
 set "TMPV=%TEMP%\remote_version.txt"
 set "TMPB=%TEMP%\latest_cleanup.bat"
 
