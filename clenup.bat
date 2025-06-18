@@ -48,7 +48,7 @@ if /I "!REMOTE_VER!"=="!VERSION!" goto :eof
 echo 🆕 Новая версия: !REMOTE_VER! (текущая: !VERSION!)
 echo Обновляю cleanup.bat...
 
-curl -s -L -o "!TMPB!" "!REPO_BASE!/cleanup.bat" >nul 2>&1
+curl -s -L -o "!TMPB!" "!REPO_BASE!/clenup.bat" >nul 2>&1
 if exist "!TMPB!" (
     copy /Y "!TMPB!" "%~f0" >nul
     del "!TMPB!"
@@ -67,8 +67,7 @@ set "STAMP=%STAMP: =0%"
 set "BACKUP_ROOT=%~dp0Backup\%STAMP%"
 mkdir "!BACKUP_ROOT!" >nul 2>&1
 
-:: Проверка обновления
-call :check_update
+
 
 :: Главное меню
 :main_menu
